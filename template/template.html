@@ -1,12 +1,22 @@
 <html>
 
+<head>
+  <link rel="stylesheet" href="{{ .CSSPath }}" />
+</head>
+
 <body style="background-color: {{ .BgColor }};">
   <pre class="mermaid">
-    {{ .Mermaid }}
+{{ .Mermaid }}
   </pre>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true });
+    var config = {
+      startOnLoad: true,
+      theme: '{{ .Theme }}',
+      darkMode: {{ .IsDarkMode }},
+      fontFamily: {{ .FontFamily }},
+    };
+    mermaid.initialize(config);
   </script>
 </body>
 

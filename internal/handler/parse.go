@@ -21,10 +21,10 @@ func GetSVG(config *common.Config) (string, error) {
 
 	dir := os.TempDir()
 	mermaidPath := path.Join(dir, "index.html")
-	if err := GenHTML(&common.Template{
-		Mermaid: mermaidVal,
-		BgColor: config.BgColor,
-	}, mermaidPath); err != nil {
+	template := config.ToTemplate()
+	template.Mermaid = mermaidVal
+
+	if err := GenHTML(template, mermaidPath); err != nil {
 		return "", err
 	}
 

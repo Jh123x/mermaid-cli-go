@@ -14,21 +14,41 @@ func main() {
 	output := flag.String("o", "", "Output file. It should be svg, default: input + \".svg\"")
 	bgColor := flag.String("b", "white", "Background Color")
 	quietMode := flag.Bool("q", false, "Suppress log output")
+	theme := flag.String("t", "default", "Theme of the chart")
+	cssFile := flag.String("C", "", "CSS for the page")
+
+	// Other flags not in mermaid cli
+	darkMode := flag.Bool("d", false, "Enable dark mode")
+	fontFamily := flag.String("ff", "", "Font Family")
 
 	// TODO Not supported yet
-	theme := flag.String("t", "default", "Theme of the chart")
 	width := flag.Int("w", 800, "Width of the page")
 	height := flag.Int("H", 600, "Height of the page")
 	outputFormat := flag.String("e", "svg", "Output format for the generated image")
 	configFile := flag.String("c", "", "Config File")
-	cssFile := flag.String("C", "", "CSS for the page")
 	svgID := flag.String("I", "", "The ID attribute for the svg element to be rendered")
 	scale := flag.Int("s", 1, "Scale factor")
 	pdfFit := flag.Bool("f", false, "Scale PDF to fit chart")
 
 	flag.Parse()
 
-	config, err := common.NewConfig(*theme, *width, *height, *input, *output, *outputFormat, *bgColor, *configFile, *cssFile, *svgID, *scale, *pdfFit, *quietMode)
+	config, err := common.NewConfig(
+		*theme,
+		*width,
+		*height,
+		*input,
+		*output,
+		*outputFormat,
+		*bgColor,
+		*configFile,
+		*cssFile,
+		*svgID,
+		*scale,
+		*pdfFit,
+		*quietMode,
+		*darkMode,
+		*fontFamily,
+	)
 	if err != nil {
 		panic(err)
 	}

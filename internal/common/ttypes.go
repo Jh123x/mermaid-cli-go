@@ -8,8 +8,12 @@ import (
 )
 
 type Template struct {
-	Mermaid string
-	BgColor string
+	Mermaid    string
+	BgColor    string
+	Theme      string
+	IsDarkMode bool
+	FontFamily string
+	CSSPath    string
 }
 
 type Config struct {
@@ -26,6 +30,33 @@ type Config struct {
 	Scale        int
 	PDFFit       bool
 	QuietMode    bool
+	DarkMode     bool
+	FontFamily   string
+}
+
+func (c *Config) ToTemplate() *Template {
+	template := &Template{
+		FontFamily: "undefined",
+		IsDarkMode: c.DarkMode,
+	}
+
+	if len(c.FontFamily) > 0 {
+		template.FontFamily = EscapeJS(c.FontFamily)
+	}
+
+	if len(c.BgColor) > 0 {
+		template.BgColor = EscapeJS(c.BgColor)
+	}
+
+	if len(c.Theme) > 0 {
+		template.Theme = EscapeJS(c.Theme)
+	}
+
+	if len(c.CssFile) > 0 {
+		template.CSSPath = EscapeJS(c.CssFile)
+	}
+
+	return template
 }
 
 func NewConfig(
@@ -42,6 +73,8 @@ func NewConfig(
 	scale int,
 	pdfFit bool,
 	quietMode bool,
+	darkMode bool,
+	fontFamily string,
 ) (*Config, error) {
 	if len(inputPath) == 0 {
 		return nil, ErrInvalidInputPath
@@ -55,7 +88,7 @@ func NewConfig(
 		outputPath = fmt.Sprintf("%s.%s", inputPath, outputFormat)
 	}
 
-	if !slices.Contains([]string{"svg", "md", "png", "pdf"}, outputFormat) {
+	if !slices.Contains(ValidOutputFormats, outputFormat) {
 		return nil, ErrInvalidOutputFormat
 	}
 
@@ -63,7 +96,29 @@ func NewConfig(
 		return nil, ErrFileDoesNotExists
 	}
 
-	// TODO Config file
+	if !slices.Contains(ValidThemes, theme) {
+		return nil, ErrInvalidTheme
+	}
 
-	return &Config{theme, width, height, inputPath, outputPath, outputFormat, bgColor, configFile, cssFile, svgID, scale, pdfFit, quietMode}, nil
+	if _, err := os.Stat(cssFile); len(cssFile) > 0 && err != nil {
+		return nil, ErrInvalidCSSFilePath
+	}
+
+	return &Config{
+		theme,
+		width,
+		height,
+		inputPath,
+		outputPath,
+		outputFormat,
+		bgColor,
+		configFile,
+		cssFile,
+		svgID,
+		scale,
+		pdfFit,
+		quietMode,
+		darkMode,
+		fontFamily,
+	}, nil
 }

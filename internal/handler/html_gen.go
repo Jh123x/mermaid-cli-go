@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"text/template"
@@ -19,6 +20,8 @@ func GenHTML(tmplCfg *common.Template, filePath string) error {
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("tmp path:", filePath)
 
 	file, err := os.Create(filePath)
 	if err != nil {
