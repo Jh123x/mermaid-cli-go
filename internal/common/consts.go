@@ -1,6 +1,9 @@
 package common
 
-import "fmt"
+import (
+	"fmt"
+	"regexp"
+)
 
 const (
 	TmplDir  = "template"
@@ -33,4 +36,6 @@ var (
 	ValidThemes = []string{THEME_DEFAULT, THEME_FOREST, THEME_DARK, THEME_NEUTRAL, THEME_NULL}
 
 	ValidOutputFormats = []string{FORMAT_SVG, FORMAT_MD, FORMAT_PDF, FORMAT_PNG, FORMAT_JPEG, FORMAT_WEBP}
+
+	MD_REGEX = regexp.MustCompile("```mermaid[\\S\\s]*?```")
 )

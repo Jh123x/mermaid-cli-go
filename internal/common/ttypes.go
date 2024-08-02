@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path"
 	"slices"
 )
 
@@ -59,6 +60,15 @@ func (c *Config) ToTemplate() *Template {
 	return template
 }
 
+func (c *Config) Clone() *Config {
+	if c == nil {
+		return nil
+	}
+
+	data := *c
+	return &data
+}
+
 func NewConfig(
 	theme string,
 	width int,
@@ -85,7 +95,7 @@ func NewConfig(
 	}
 
 	if len(outputPath) == 0 {
-		outputPath = fmt.Sprintf("%s.%s", inputPath, outputFormat)
+		outputPath = path.Join(path.Dir(inputPath), fmt.Sprintf("%s.%s", path.Base(inputPath), outputFormat))
 	}
 
 	if !slices.Contains(ValidOutputFormats, outputFormat) {

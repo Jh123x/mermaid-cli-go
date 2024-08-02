@@ -26,7 +26,6 @@ func main() {
 	width := flag.Int("w", 800, "Width of the page")
 	height := flag.Int("H", 600, "Height of the page")
 	configFile := flag.String("c", "", "Config File")
-	svgID := flag.String("I", "", "The ID attribute for the svg element to be rendered")
 	scale := flag.Int("s", 1, "Scale factor")
 	pdfFit := flag.Bool("f", false, "Scale PDF to fit chart")
 
@@ -53,9 +52,18 @@ func main() {
 		panic(err)
 	}
 
-	path, err := handler.GetSVG(config)
-	if err != nil {
-		panic(err)
+	var path string
+	switch config.OutputFormat {
+	case common.FORMAT_MD:
+		path, err = handler.GetMarkdown(config)
+		if err != nil {
+			panic(err)
+		}
+	default:
+		path, err = handler.GetDiagram(config)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	if !config.QuietMode {
