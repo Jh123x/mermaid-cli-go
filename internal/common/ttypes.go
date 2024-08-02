@@ -27,7 +27,6 @@ type Config struct {
 	BgColor      string
 	ConfigFile   string
 	CssFile      string
-	SvgID        string
 	Scale        int
 	PDFFit       bool
 	QuietMode    bool
@@ -79,7 +78,6 @@ func NewConfig(
 	bgColor string,
 	configFile string,
 	cssFile string,
-	svgID string,
 	scale int,
 	pdfFit bool,
 	quietMode bool,
@@ -124,7 +122,6 @@ func NewConfig(
 		bgColor,
 		configFile,
 		cssFile,
-		svgID,
 		scale,
 		pdfFit,
 		quietMode,

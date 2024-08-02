@@ -41,7 +41,6 @@ func main() {
 		*bgColor,
 		*configFile,
 		*cssFile,
-		*svgID,
 		*scale,
 		*pdfFit,
 		*quietMode,
