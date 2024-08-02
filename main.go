@@ -16,6 +16,7 @@ func main() {
 	quietMode := flag.Bool("q", false, "Suppress log output")
 	theme := flag.String("t", "default", "Theme of the chart")
 	cssFile := flag.String("C", "", "CSS for the page")
+	outputFormat := flag.String("e", "svg", "Output format for the generated image")
 
 	// Other flags not in mermaid cli
 	darkMode := flag.Bool("d", false, "Enable dark mode")
@@ -24,7 +25,6 @@ func main() {
 	// TODO Not supported yet
 	width := flag.Int("w", 800, "Width of the page")
 	height := flag.Int("H", 600, "Height of the page")
-	outputFormat := flag.String("e", "svg", "Output format for the generated image")
 	configFile := flag.String("c", "", "Config File")
 	svgID := flag.String("I", "", "The ID attribute for the svg element to be rendered")
 	scale := flag.Int("s", 1, "Scale factor")

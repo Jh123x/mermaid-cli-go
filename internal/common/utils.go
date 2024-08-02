@@ -13,3 +13,7 @@ func EscapeJS(val string) string {
 
 	return builder.String()
 }
+
+func GetPtrOf[T any](val T) *T {
+	return &val
+}
